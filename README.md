@@ -2,7 +2,9 @@
  Meu Currículo — Site Pessoal
 
 **Estudante:** Dércio Filipe Luís Chipura
-**Turma:** Programação de Design Web
+**Turma:** Programação de Design Web,na universidade licungo
+licenciatura em Informática 
+  
 
 ## Descrição do projeto
 
