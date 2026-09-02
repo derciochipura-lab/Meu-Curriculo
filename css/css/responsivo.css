@@ -1,1 +1,59 @@
+/* =========================================================
+   RESPONSIVO.CSS — media queries
+   Abordagem mobile-first: as regras em estilo.css já são as
+   regras "base" pensadas para ecrãs pequenos (colunas únicas,
+   flex-wrap, grid auto-fit). Aqui ampliamos progressivamente
+   o espaçamento e o tamanho de texto à medida que o ecrã
+   cresce, em vez de partir do desktop e "encolher" depois.
+   ========================================================= */
 
+/* ---- A partir de telemóvel maior / tablet pequeno (>= 481px) ---- */
+@media (min-width: 30em) { /* 30em = 480px, escrito em em para
+                               acompanhar o zoom de texto do utilizador */
+  .cabecalho .logotipo {
+    font-size: 1.5rem;
+  }
+
+  .heroi .retrato {
+    width: 13rem;
+    height: 13rem;
+  }
+
+  .grelha-projetos {
+    gap: var(--espaco-lg);
+  }
+}
+
+/* ---- A partir de tablet (>= 769px) ---- */
+@media (min-width: 48em) { /* 48em = 768px */
+  :root {
+    --espaco-lg: 4rem;
+  }
+
+  body {
+    font-size: 1.05rem;
+  }
+
+  .heroi {
+    flex-wrap: nowrap;
+  }
+
+  .navegacao > ul {
+    gap: 0.5rem;
+  }
+
+  .formulario fieldset {
+    padding: var(--espaco-md) var(--espaco-lg);
+  }
+
+  /* Em ecrãs largos, os campos curtos (data, número, telefone)
+     partilham a linha em vez de empilhar sempre a 100vw de altura. */
+  .campo-duplo {
+    display: flex;
+    gap: var(--espaco-md);
+  }
+
+  .campo-duplo .campo {
+    flex: 1 1 0;
+  }
+}
