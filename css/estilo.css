@@ -1,1 +1,633 @@
+/* =========================================================
+   ESTILO.CSS — estilos partilhados por todas as páginas
+   Site de currículo — Roque Armando Mauricio
+   ========================================================= */
 
+/* ---- Variáveis CSS (custom properties) -----------------
+   Centralizam a paleta e os espaçamentos. Mudar um valor
+   aqui reflete-se em todo o site sem tocar no resto do CSS. */
+:root {
+  --cor-papel: #f6f4ef;      /* fundo principal, tom claro e neutro */
+  --cor-painel: #ffffff;     /* fundo de cartões sobre o papel */
+  --cor-tinta: #22262a;      /* texto principal, quase preto */
+  --cor-aco: #1f5c4a;        /* verde escuro, cor de identidade do site */
+  --cor-aco-escuro: #123a2e;
+  --cor-amarelo: #3fa9f5;    /* azul, cor de destaque (mantém o nome da variável por consistência com o resto do ficheiro) */
+  --cor-cinza: #6b6f72;      /* texto secundário */
+  --cor-linha: #d9d4c8;      /* linhas divisórias, bordas subtis */
+
+  --espaco-xs: 0.5rem;
+  --espaco-sm: 1rem;
+  --espaco-md: 1.75rem;
+  --espaco-lg: 3rem;
+
+  --largura-conteudo: 68rem;
+  --raio: 6px;
+}
+
+/* ---- Reset mínimo e box model ---------------------------
+   box-sizing: border-box aplicado a tudo, para que padding e
+   border nunca aumentem a largura declarada dos elementos. */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--cor-papel);
+  color: var(--cor-tinta);
+  font-family: Georgia, 'Times New Roman', serif;
+  line-height: 1.6;
+  /* rem para tamanho base independente do zoom do utilizador */
+  font-size: 1rem;
+}
+
+h1, h2, h3, h4 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: normal;
+  color: var(--cor-aco-escuro);
+  line-height: 1.25;
+}
+
+p, li, label, input, textarea, select, td, th {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: var(--cor-aco);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ---- Layout geral ---------------------------------------
+   %  para a largura do contentor (fluida em qualquer ecrã),
+   com um max-width em rem para não esticar demais em monitores
+   largos. */
+.envelope {
+  width: 100%;
+  max-width: var(--largura-conteudo);
+  margin: 0 auto;
+  padding: 0 var(--espaco-md);
+}
+
+/* =========================================================
+   CABEÇALHO (header) — partilhado, com navegação Flexbox
+   ========================================================= */
+.cabecalho {
+  background: linear-gradient(180deg, var(--cor-aco-escuro) 0%, var(--cor-aco) 100%);
+  color: var(--cor-papel);
+  /* position: sticky mantém o cabeçalho visível ao rolar a
+     página, sem sair do fluxo do documento como "fixed" faria
+     e sem precisar de recalcular manualmente o espaço deixado.
+     Diferenças entre os valores de "position":
+       - static  : comportamento normal, segue o fluxo do documento,
+                   top/left/etc. não têm efeito.
+       - relative: continua no fluxo, mas pode deslocar-se com
+                   top/left/right/bottom a partir da sua posição original.
+       - absolute: sai do fluxo do documento; posiciona-se em relação
+                   ao ancestral posicionado mais próximo (ou ao body).
+       - fixed   : sai do fluxo; posiciona-se em relação à janela do
+                   browser e não se move com o scroll.
+       - sticky  : comporta-se como "relative" até o ecrã fazer scroll
+                   até ao limiar definido (aqui, top: 0), altura em
+                   que passa a comportar-se como "fixed". */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.cabecalho .envelope {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-sm);
+  padding-top: var(--espaco-sm);
+  padding-bottom: var(--espaco-sm);
+}
+
+.cabecalho .logotipo {
+  font-size: 1.35rem;
+  color: var(--cor-papel);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+
+/* Seletor de filho direto (>): aplica-se apenas à lista que é
+   filha imediata de nav, não a listas aninhadas eventuais. */
+.navegacao > ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navegacao a {
+  display: inline-block;
+  color: var(--cor-papel);
+  text-decoration: none;
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--raio);
+  position: relative;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.navegacao a:hover,
+.navegacao a:focus {
+  background-color: rgba(246, 244, 239, 0.15);
+}
+
+/* Seletor de atributo + pseudo-elemento ::after: a página
+   atual ganha um traço amarelo por baixo, sem precisar de JS. */
+.navegacao a.ativo {
+  color: var(--cor-amarelo);
+  font-weight: bold;
+}
+
+.navegacao a.ativo::after {
+  content: "";
+  position: absolute;
+  left: 0.8rem;
+  right: 0.8rem;
+  bottom: 0.15rem;
+  height: 2px;
+  background: var(--cor-amarelo);
+}
+
+/* =========================================================
+   RODAPÉ (footer) — partilhado
+   ========================================================= */
+.rodape {
+  background: var(--cor-aco-escuro);
+  color: var(--cor-papel);
+  margin-top: var(--espaco-lg);
+}
+
+.rodape .envelope {
+  padding-top: var(--espaco-md);
+  padding-bottom: var(--espaco-md);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--espaco-sm);
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.88rem;
+}
+
+.rodape a {
+  color: var(--cor-papel);
+}
+
+.rodape .assinatura {
+  color: var(--cor-cinza);
+}
+
+/* =========================================================
+   SECÇÕES GENÉRICAS
+   ========================================================= */
+main {
+  padding-top: var(--espaco-lg);
+  padding-bottom: var(--espaco-lg);
+}
+
+.bloco {
+  padding-bottom: var(--espaco-lg);
+}
+
+.bloco > h2 {
+  font-size: 1.4rem;
+  border-left: 4px solid var(--cor-amarelo);
+  padding-left: 0.6rem;
+  margin-bottom: var(--espaco-sm);
+}
+
+/* nth-child: alterna o fundo das linhas da tabela para
+   facilitar a leitura, sem marcar classes em cada <tr>. */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.5rem 0.7rem;
+  border-bottom: 1px solid var(--cor-linha);
+}
+
+thead th {
+  background: var(--cor-aco);
+  color: var(--cor-papel);
+  font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+  background: rgba(44, 74, 99, 0.05);
+}
+
+/* =========================================================
+   PÁGINA HOME
+   ========================================================= */
+.heroi {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-lg);
+  padding: var(--espaco-lg) 0;
+}
+
+.heroi figure {
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.heroi .retrato {
+  width: 11rem;
+  height: 11rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--cor-amarelo);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.heroi .texto {
+  flex: 1 1 20rem;
+}
+
+.tagline {
+  font-size: 1.15rem;
+  color: var(--cor-aco);
+  font-style: italic;
+  margin: 0.2rem 0 var(--espaco-sm);
+}
+
+/* Botão de destaque (call to action), com gradiente e uma
+   animação discreta de pulsação para chamar a atenção sem
+   ser exagerado. */
+.cta {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--cor-amarelo) 0%, #b3841f 100%);
+  color: var(--cor-aco-escuro);
+  text-decoration: none;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  padding: 0.75rem 1.6rem;
+  border-radius: var(--raio);
+  box-shadow: 0 4px 14px rgba(201, 154, 46, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: pulsar 3s ease-in-out infinite;
+}
+
+.cta:hover,
+.cta:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(201, 154, 46, 0.5);
+}
+
+@keyframes pulsar {
+  0%, 100% { box-shadow: 0 4px 14px rgba(201, 154, 46, 0.35); }
+  50%      { box-shadow: 0 4px 22px rgba(201, 154, 46, 0.6); }
+}
+
+.midia-apresentacao {
+  margin-top: var(--espaco-lg);
+}
+
+.midia-apresentacao video,
+.midia-apresentacao iframe {
+  width: 100%;
+  max-width: 40rem;
+  border-radius: var(--raio);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.audio-caixa {
+  margin-top: var(--espaco-md);
+  background: var(--cor-painel);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio);
+  padding: var(--espaco-sm);
+  max-width: 28rem;
+}
+
+.audio-caixa p {
+  margin-top: 0;
+  font-size: 0.9rem;
+  color: var(--cor-cinza);
+}
+
+.audio-caixa audio {
+  width: 100%;
+}
+
+/* =========================================================
+   PÁGINA SOBRE / CURRÍCULO
+   ========================================================= */
+figure.certificado {
+  max-width: 24rem;
+  background: var(--cor-painel);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio);
+  padding: var(--espaco-xs);
+  margin: var(--espaco-sm) 0;
+}
+
+figure.certificado figcaption {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.85rem;
+  color: var(--cor-cinza);
+  padding: 0.4rem 0.2rem 0;
+  text-align: center;
+}
+
+.lista-formacao {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lista-formacao li {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--cor-linha);
+}
+
+.lista-formacao li:last-child {
+  border-bottom: none;
+}
+
+.ano-destaque {
+  color: var(--cor-amarelo);
+  font-weight: bold;
+  margin-right: 0.4rem;
+}
+
+.cargo {
+  margin-bottom: var(--espaco-sm);
+}
+
+.cargo .empresa {
+  font-style: italic;
+  color: var(--cor-cinza);
+  margin: 0 0 0.3rem;
+}
+
+/* =========================================================
+   PÁGINA PORTFÓLIO — CSS Grid
+   ========================================================= */
+.grelha-projetos {
+  display: grid;
+  /* auto-fit + minmax: quantas colunas couberem, cada uma com
+     no mínimo 16rem — cresce/encolhe sem precisar de media
+     query própria para o número de colunas. */
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--espaco-md);
+}
+
+.cartao-projeto {
+  background: var(--cor-painel);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio);
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cartao-projeto:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+}
+
+.cartao-projeto figure {
+  margin: 0;
+}
+
+.cartao-projeto img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.cartao-projeto figcaption {
+  padding: var(--espaco-sm);
+}
+
+.cartao-projeto h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.1rem;
+}
+
+.cartao-projeto p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--cor-cinza);
+}
+
+/* =========================================================
+   PÁGINA HOBBIES — Flexbox
+   ========================================================= */
+.linha-hobbies {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: var(--espaco-md);
+}
+
+.cartao-hobby {
+  flex: 1 1 14rem;
+  max-width: 18rem;
+  background: var(--cor-painel);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio);
+  padding: var(--espaco-sm);
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+.cartao-hobby img {
+  width: 6rem;
+  height: 6rem;
+  margin: 0 auto var(--espaco-xs);
+  border-radius: 50%;
+}
+
+.cartao-hobby h3 {
+  margin: 0 0 0.3rem;
+  font-size: 1.05rem;
+}
+
+.cartao-hobby p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--cor-cinza);
+}
+
+/* =========================================================
+   PÁGINA CONTACTO — formulário
+   ========================================================= */
+.formulario fieldset {
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio);
+  padding: var(--espaco-sm) var(--espaco-md);
+  margin: 0 0 var(--espaco-md);
+}
+
+.formulario legend {
+  font-family: Georgia, 'Times New Roman', serif;
+  color: var(--cor-aco);
+  padding: 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.campo {
+  margin-bottom: var(--espaco-sm);
+}
+
+.campo label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+  color: var(--cor-tinta);
+}
+
+/* Seletor de atributo: aplica-se apenas aos inputs de texto,
+   sem afetar radios/checkboxes que têm aparência própria. */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="number"],
+input[type="file"],
+select,
+textarea {
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio);
+  background: var(--cor-painel);
+  color: var(--cor-tinta);
+  font-family: Helvetica, Arial, sans-serif;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--cor-aco);
+  box-shadow: 0 0 0 3px rgba(44, 74, 99, 0.15);
+}
+
+/* Estado de validação nativo: quando o navegador considera o
+   campo inválido (ex: email mal formatado) após interação. */
+input:invalid:not(:placeholder-shown) {
+  border-color: #b3402e;
+}
+
+textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+/* --- Grupo de rádio/checkbox estilizado sem aparência padrão --- */
+.grupo-opcoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-sm);
+}
+
+.opcao {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--cor-papel);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio);
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+}
+
+.opcao input[type="radio"],
+.opcao input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid var(--cor-aco);
+  background: var(--cor-painel);
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.opcao input[type="radio"] {
+  border-radius: 50%;
+}
+
+.opcao input[type="checkbox"] {
+  border-radius: 3px;
+}
+
+.opcao input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--cor-amarelo);
+  transform: translate(-50%, -50%);
+}
+
+.opcao input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  top: -0.2rem;
+  left: 0.1rem;
+  font-size: 0.85rem;
+  color: var(--cor-amarelo);
+  font-weight: bold;
+}
+
+.opcao:has(input:checked) {
+  border-color: var(--cor-aco);
+  background: rgba(44, 74, 99, 0.06);
+}
+
+.botao-enviar {
+  background: var(--cor-aco);
+  color: var(--cor-papel);
+  border: none;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 0.75rem 1.8rem;
+  border-radius: var(--raio);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.botao-enviar:hover,
+.botao-enviar:focus {
+  background-color: var(--cor-aco-escuro);
+}
+
+.nota-campo {
+  font-size: 0.78rem;
+  color: var(--cor-cinza);
+  margin-top: 0.25rem;
+}
